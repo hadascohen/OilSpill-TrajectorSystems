@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OilSpill | Advanced Marine Environmental Protection</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -1;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(30, 60, 114, 0.8) 0%, 
+                rgba(42, 82, 152, 0.7) 50%, 
+                rgba(15, 76, 117, 0.8) 100%);
+            z-index: 1;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20"><path d="M0 10 Q 25 0 50 10 T 100 10 V 20 H 0 Z" fill="rgba(255,255,255,0.1)"/></svg>') repeat-x;
+            animation: wave 8s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes wave {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-200px); }
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            z-index: 2;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        .hero-text {
+            color: white;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+            background: linear-gradient(45deg, #fff, #4facfe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            font-weight: 300;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+            line-height: 1.7;
+            max-width: 800px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .hero-button {
+            padding: 1rem 2rem;
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 10px 30px rgba(79, 172, 254, 0.3);
+        }
+
+        .hero-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(79, 172, 254, 0.4);
+        }
+
+        .hero-button.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .video-info {
+            position: absolute;
+            bottom: 2rem;
+            right: 2rem;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            backdrop-filter: blur(10px);
+            z-index: 2;
+        }
+
+        .video-container {
+            display: none; /* Hide the old video container */
+        }
+
+        .features {
+            padding: 5rem 0;
+            background: #f8fafc;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #2d3748;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #2d3748;
+        }
+
+        .technical-specs {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .spec-item {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .spec-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, #fff, #4facfe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .methodology {
+            padding: 5rem 0;
+            background: white;
+        }
+
+        .methodology-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .methodology-text {
+            padding: 2rem;
+        }
+
+        .methodology-visual {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            height: 400px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        .contact {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .contact-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 3rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .contact-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: #fff;
+        }
+
+        .lab-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #4facfe;
+        }
+
+        .school-name {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .contact-details {
+            line-height: 1.8;
+        }
+
+        .contact-details p {
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+
+        .contact-details strong {
+            color: #4facfe;
+            display: inline-block;
+            min-width: 80px;
+        }
+
+        .contact-cta {
+            text-align: center;
+        }
+
+        .contact-cta h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-cta p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .email-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 10px 30px rgba(79, 172, 254, 0.3);
+            margin-bottom: 1rem;
+        }
+
+        .email-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(79, 172, 254, 0.4);
+        }
+
+        .university-logo {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero-content {
+                padding: 1rem;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.3rem;
+            }
+            
+            .hero-description {
+                font-size: 1rem;
+            }
+            
+            .hero-cta {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .video-info {
+                bottom: 1rem;
+                right: 1rem;
+                left: 1rem;
+                text-align: center;
+            }
+            
+            .methodology-content {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <!-- Try multiple video formats for better compatibility -->
+        <video class="hero-video" muted preload="metadata">
+            <source src="./OilSpill.webm" type="video/webm">
+            <source src="OilSpill.webm" type="video/webm">
+            <!-- Fallback message -->
+            <p>Your browser doesn't support video playback.</p>
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">OilSpill</h1>
+                <h2 class="hero-subtitle">Advanced Marine Environmental Protection</h2>
+                <p class="hero-description">
+                    Revolutionary oil spill trajectory prediction using Liquid Time-Constant Networks and Multi-Agent Systems. 
+                    Transforming emergency response with real-time adaptability and autonomous coordination.
+                </p>
+                <div class="hero-cta">
+                    <a href="#features" class="hero-button">Explore Technology</a>
+                    <a href="#methodology" class="hero-button secondary">View Research</a>
+                </div>
+            </div>
+        </div>
+        <div class="video-info" id="video-status">
+            🎥 Loading System Demonstration...
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">Revolutionary Technology</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h3 class="feature-title">Liquid Time-Constant Networks</h3>
+                    <p>Advanced neural architecture that captures continuous-time dynamics of oil weathering processes and environmental forcing factors with unprecedented accuracy.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3 class="feature-title">Multi-Agent Coordination</h3>
+                    <p>Distributed intelligence system using MOOS-IvP framework enabling autonomous decision-making and fault-tolerant operations in dynamic marine environments.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">Real-Time Adaptation</h3>
+                    <p>Continuous learning and adaptation to changing oceanographic conditions, weather patterns, and spill characteristics for optimal response effectiveness.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">Superior Performance</h3>
+                    <p>Validated superior performance over traditional LSTM methods across spatial accuracy, temporal consistency, area conservation, and physical realism metrics.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌊</div>
+                    <h3 class="feature-title">Deepwater Horizon Validated</h3>
+                    <p>Comprehensive testing using historical oil spill data demonstrates practical viability across diverse environmental scenarios and operational conditions.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3 class="feature-title">Scalable Architecture</h3>
+                    <p>Three optimized solver variants (RK4, Explicit, Euler) tailored for different operational requirements from strategic planning to rapid assessment.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="technical-specs">
+        <div class="container">
+            <h2 class="section-title">Technical Excellence</h2>
+            <div class="specs-grid">
+                <div class="spec-item">
+                    <div class="spec-number">3x</div>
+                    <p>Solver Variants<br>RK4 • Explicit • Euler</p>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-number">Real-Time</div>
+                    <p>Continuous Adaptation<br>to Marine Conditions</p>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-number">Multi-Agent</div>
+                    <p>Distributed Intelligence<br>MOOS-IvP Framework</p>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-number">Superior</div>
+                    <p>Predictive Performance<br>vs Traditional LSTM</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="methodology" id="methodology">
+        <div class="container">
+            <h2 class="section-title">Advanced Methodology</h2>
+            <div class="methodology-content">
+                <div class="methodology-text">
+                    <h3>Integrated Framework</h3>
+                    <p>Our comprehensive framework integrates liquid time-constant networks with multiagent systems to address fundamental limitations of existing oil spill prediction approaches while providing enhanced adaptability and real-time responsiveness.</p>
+                    
+                    <h3>Optimized Performance</h3>
+                    <p>Systematic evaluation of numerical solvers identifies optimal deployment strategies:</p>
+                    <ul>
+                        <li><strong>OilSpill-RK4:</strong> Maximum accuracy for strategic planning</li>
+                        <li><strong>OilSpill-Explicit:</strong> Exceptional stability for resource allocation</li>
+                        <li><strong>OilSpill-Euler:</strong> Computational efficiency for rapid assessment</li>
+                    </ul>
+                </div>
+                <div class="methodology-visual">
+                    <div>
+                        <h3>System Architecture</h3>
+                        <p>Distributed sensing networks<br>
+                        Emergent formation control<br>
+                        Dynamic task allocation<br>
+                        Fault-tolerant operations</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact">
+        <div class="container">
+            <h2 class="section-title">Contact the Research Team</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="university-logo">🏛️</div>
+                    <div class="lab-name">Swarm & AI Lab</div>
+                    <div class="school-name">The Leon H. Charney School of Marine Sciences</div>
+                    <div class="contact-details">
+                        <p><strong>Location:</strong> Room 276, Multi Purpose Bldg</p>
+                        <p><strong>University:</strong> University of Haifa</p>
+                        <p><strong>Address:</strong> 199 Abba Khoushy Ave.<br>
+                           Mount Carmel, Haifa, Israel</p>
+                        <p><strong>POB:</strong> 3338</p>
+                        <p><strong>Zip Code:</strong> 3103301</p>
+                        <p><strong>Phone:</strong> <a href="tel:+972-4-8288790" style="color: #4facfe;">+972-4-8288790</a></p>
+                        <p><strong>Email:</strong> <a href="mailto:marine-info@univ.haifa.ac.il" style="color: #4facfe;">marine-info@univ.haifa.ac.il</a></p>
+                    </div>
+                </div>
+                <div class="contact-cta">
+                    <h3>Collaborate with Us</h3>
+                    <p>Interested in our oil spill prediction research? We welcome collaboration opportunities, academic partnerships, and discussions about implementing our technology for marine environmental protection.</p>
+                    <a href="mailto:marine-info@univ.haifa.ac.il?subject=OilSpill Research Inquiry" class="email-button">Send Research Inquiry</a>
+                    <p><small>University of Haifa • Leon H. Charney School of Marine Sciences</small></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Add smooth scrolling and interactive elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate feature cards on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe feature cards
+            document.querySelectorAll('.feature-card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+
+            // Enhanced background video with better error handling and debugging
+            const heroVideo = document.querySelector('.hero-video');
+            const videoStatus = document.getElementById('video-status');
+            
+            if (heroVideo) {
+                let isReversePlaying = false;
+                let reverseInterval;
+                
+                // Update status function
+                function updateStatus(message) {
+                    if (videoStatus) {
+                        videoStatus.innerHTML = message;
+                    }
+                    console.log('Video Status:', message);
+                }
+                
+                // Check if video file exists
+                updateStatus('🔍 Checking video file...');
+                
+                heroVideo.addEventListener('loadstart', function() {
+                    updateStatus('📥 Loading video...');
+                });
+                
+                heroVideo.addEventListener('loadeddata', function() {
+                    updateStatus('✅ Video loaded successfully!');
+                    console.log('Video duration:', this.duration, 'seconds');
+                    console.log('Video dimensions:', this.videoWidth, 'x', this.videoHeight);
+                });
+                
+                heroVideo.addEventListener('canplay', function() {
+                    updateStatus('▶️ Video ready to play');
+                    startReversePlayback();
+                });
+                
+                heroVideo.addEventListener('loadedmetadata', function() {
+                    console.log('Video metadata loaded');
+                    console.log('Duration:', this.duration);
+                    console.log('Video size:', this.videoWidth, 'x', this.videoHeight);
+                });
+                
+                function startReversePlayback() {
+                    if (heroVideo.duration && heroVideo.duration > 0) {
+                        heroVideo.currentTime = heroVideo.duration;
+                        heroVideo.muted = true;
+                        
+                        heroVideo.play().then(() => {
+                            heroVideo.pause();
+                            simulateReversePlayback();
+                            updateStatus('🔄 Playing in reverse');
+                        }).catch(error => {
+                            console.log('Autoplay prevented:', error);
+                            simulateReversePlayback();
+                            updateStatus('🔄 Playing in reverse (no autoplay)');
+                        });
+                    } else {
+                        updateStatus('❌ Video duration not available');
+                    }
+                }
+                
+                function simulateReversePlayback() {
+                    const fps = 24;
+                    const interval = 1000 / fps;
+                    const step = 1 / fps;
+                    
+                    if (reverseInterval) {
+                        clearInterval(reverseInterval);
+                    }
+                    
+                    reverseInterval = setInterval(() => {
+                        if (isReversePlaying && heroVideo.duration) {
+                            heroVideo.currentTime -= step;
+                            
+                            if (heroVideo.currentTime <= 0) {
+                                heroVideo.currentTime = heroVideo.duration;
+                            }
+                        }
+                    }, interval);
+                    
+                    isReversePlaying = true;
+                }
+                
+                // Enhanced error handling
+                heroVideo.addEventListener('error', function(e) {
+                    console.error('Video error details:', {
+                        error: e,
+                        networkState: this.networkState,
+                        readyState: this.readyState,
+                        currentSrc: this.currentSrc,
+                        src: this.src
+                    });
+                    
+                    let errorMessage = '❌ Video failed to load';
+                    
+                    if (this.error) {
+                        switch(this.error.code) {
+                            case 1:
+                                errorMessage = '❌ Video loading aborted';
+                                break;
+                            case 2:
+                                errorMessage = '❌ Network error loading video';
+                                break;
+                            case 3:
+                                errorMessage = '❌ Video format not supported';
+                                break;
+                            case 4:
+                                errorMessage = '❌ Video source not found';
+                                break;
+                            default:
+                                errorMessage = '❌ Unknown video error';
+                        }
+                    }
+                    
+                    updateStatus(errorMessage);
+                    
+                    // Fallback to gradient background
+                    document.querySelector('.hero').style.background = 
+                        'linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #0f4c75 100%)';
+                });
+                
+                // Visibility observer
+                const videoObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            isReversePlaying = true;
+                        } else {
+                            isReversePlaying = false;
+                        }
+                    });
+                });
+                
+                videoObserver.observe(heroVideo);
+                
+                // Initial attempt to load
+                heroVideo.load();
+                
+                // Cleanup
+                window.addEventListener('beforeunload', () => {
+                    if (reverseInterval) {
+                        clearInterval(reverseInterval);
+                    }
+                });
+                
+                // Debug info
+                setTimeout(() => {
+                    console.log('Current video src:', heroVideo.currentSrc || heroVideo.src);
+                    console.log('Video exists check:', heroVideo.currentSrc ? 'Source set' : 'No source');
+                }, 1000);
+            }
+
+            // Smooth scrolling for navigation
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
